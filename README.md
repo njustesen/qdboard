@@ -1,1 +1,1 @@
-# qd-board
+# QD Board
