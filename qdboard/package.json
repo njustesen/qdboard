@@ -1,6 +1,6 @@
 {
-  "name": "FFAI",
-  "description": "FFAI web interface",
+  "name": "QDBoard",
+  "description": "QD Board",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
