@@ -4,6 +4,10 @@ appServices.factory('RunService', function($http) {
         get: function(id) {
             return $http.get(options.api.base_url + '/runs/' + id);
         },
+
+        getArchive: function(id) {
+            return $http.get(options.api.base_url + '/runs/' + id + '/archive');
+        },
         
         findAll: function() {
             return $http.get(options.api.base_url + '/runs/');

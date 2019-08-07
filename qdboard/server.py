@@ -27,14 +27,14 @@ def create():
 
 @app.route('/runs/', methods=['GET'])
 def get_all_runs():
-    runs = api.get_runs(simple=True)
+    runs = api.get_runs()
     run_list = [run.to_json() for run in runs]
     return json.dumps(run_list)
 
 
 @app.route('/runs/<run_id>', methods=['GET'])
-def get_game(run_id):
-    return json.dumps(api.get_run(run_id).to_json())
+def get_archive(run_id):
+    return json.dumps(api.get_archive(run_id).to_json())
 
 
 def start_server(debug=False, use_reloader=False):

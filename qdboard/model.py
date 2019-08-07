@@ -1,4 +1,6 @@
 import numpy as np
+import math
+import numpy
 
 
 class Dimension:
@@ -20,6 +22,7 @@ class Archive:
 
     def __init__(self, dimensions, cells, solutions):
         self.cells = cells
+        self.dimensions = dimensions
         self.solutions = solutions
         self.fitness_mean = np.mean([solution.fitness for solution in self.solutions])
         self.fitness_max = np.max([solution.fitness for solution in self.solutions])
@@ -27,8 +30,9 @@ class Archive:
 
     def to_json(self):
         return {
-            'cells': [cell.to_json() for cell in self.cells],
-            'solutions': [solution.to_json() for solution in self.solutions],
+            'cells': [cell.to_json() for cell in list(self.cells.values())],
+            #'solutions': [solution.to_json() for solution in self.solutions],
+            'dimensions': [dim.to_json() for dim in self.dimensions],
             'fitness_mean': self.fitness_mean,
             'fitness_min': self.fitness_min,
             'fitness_max': self.fitness_max
@@ -47,9 +51,9 @@ class Cell:
             'points': self.points,
             'solutions': [solution.to_json() for solution in self.solutions],
             'fitness_mean': np.mean(self.fitnesses),
-            'fitness_std': np.std(self.fitnesses),
-            'fitness_min': np.min(self.fitnesses),
-            'fitness_max': np.max(self.fitnesses)
+            'fitness_std': np.std(self.fitnesses) if len(self.fitnesses) > 0 else None,
+            'fitness_min': np.min(self.fitnesses) if len(self.fitnesses) > 0 else None,
+            'fitness_max': np.max(self.fitnesses) if len(self.fitnesses) > 0 else None
         }
 
 
@@ -70,14 +74,75 @@ class Solution:
 
 class QDAlgorithm:
 
-    def __init__(self, run_id, config):
-        raise NotImplementedError("Must be overridden by sub-class")
+    def __init__(self, run_id, config, b_dimensions, problem):
+        self.run_id = run_id
+        self.config = config
+        self.b_dimensions = b_dimensions
+        self.b_dims = len(self.b_dimensions)
+        self.problem = problem
+        self.b_mins = [dimension.min_value for dimension in self.b_dimensions]
+        self.b_maxs = [dimension.max_value for dimension in self.b_dimensions]
 
     def start(self):
         raise NotImplementedError("Must be overridden by sub-class")
 
-    def stop(self, config):
+    def stop(self):
         raise NotImplementedError("Must be overridden by sub-class")
 
-    def load(self):
+    def get_archive(self):
         raise NotImplementedError("Must be overridden by sub-class")
+
+    def is_done(self):
+        raise NotImplementedError("Must be overridden by sub-class")
+
+    def to_json(self):
+        return {
+            'run_id': self.run_id,
+            'b_dimensions': [dim.to_json() for dim in self.b_dimensions],
+            'problem': self.problem.to_json(),
+            'is_done': self.is_done(),  # Fix this
+            'b_mins': self.b_mins,
+            'b_maxs': self.b_maxs
+        }
+
+
+class Problem:
+
+    def __init__(self, name, x_dims, b_dims, continuous=True, x_min=0, x_max=1):
+        self.name = name
+        self.x_dims = x_dims
+        self.b_dims = b_dims
+        self.continuous = continuous
+        self.x_min = x_min
+        self.x_max = x_max
+
+    def evaluate(self, genotype):
+        raise NotImplementedError("Must be overridden by sub-class")
+
+    def to_json(self):
+        return {
+            'name': self.name,
+            'x_dims': self.x_dims,
+            'b_dims': self.b_dims,
+            'continous': self.continuous,
+            'x_min': self.x_min,
+            'x_max': self.x_max
+        }
+
+
+class Rastrigin(Problem):
+
+    def __init__(self, x_dims, b_dims):
+        super().__init__(f"Rastrigin-{x_dims}D-{b_dims}D", x_dims=x_dims, b_dims=b_dims)
+
+    def evaluate(self, genotype):
+        fitness = self.__rastrigin(genotype)
+        behavior = genotype[:2]
+        return Solution(genotype, behavior, fitness)
+
+    def __rastrigin(self, xx):
+        x = xx * 10.0 - 5.0
+        f = 10 * x.shape[0]
+        for i in range(0, x.shape[0]):
+            f += x[i] * x[i] - 10 * math.cos(2 * math.pi * x[i])
+        return -f

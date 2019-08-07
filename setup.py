@@ -9,7 +9,9 @@ setup(name='qdboard',
           'Flask',
           'Jinja2',
           'python-interface',
-          'stopit'
+          'stopit',
+          'scikit-learn',
+          'scipy'
       ],
       packages=find_packages()
 )
