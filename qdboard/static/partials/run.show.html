@@ -35,10 +35,11 @@
             <h4 class="text-center">Details</h4>
             <hr />
             <div ng-if="run.problem.name.split('-')[0]=='Zelda'">
-                <div>
-                    <p class="text-center"><b>Fitness: </b>{{ solutionInFocus.fitness }} </p>
-                </div>
+
                 <div class="zelda" id="details-clicked" ng-if="solutionClicked !== null && solutionInFocus === null">
+                    <div>
+                        <p class="text-center"><b>Fitness: </b>{{ solutionClicked.fitness }} </p>
+                    </div>
                     <div ng-repeat="y in [] | range:9" style="width: 312px; height: 24px">
                         <span ng-repeat="x in [] | range:13" style="float:left; width: 24px; height: 24px">
                             <img src="static/img/zelda/{{ solutionClicked.genotype[y*13+x].replace('.', 'f') }}.png">
@@ -46,6 +47,9 @@
                     </div>
                 </div>
                 <div class="zelda" id="details-clicked" ng-if="solutionInFocus !== null">
+                    <div>
+                        <p class="text-center"><b>Fitness: </b>{{ solutionInFocus.fitness }} </p>
+                    </div>
                     <div ng-repeat="y in [] | range:9" style="width: 312px; height: 24px">
                         <span ng-repeat="x in [] | range:13" style="float:left; width: 24px; height: 24px">
                             <img src="static/img/zelda/{{ solutionInFocus.genotype[y*13+x].replace('.', 'f') }}.png">

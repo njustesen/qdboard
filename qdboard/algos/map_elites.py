@@ -362,7 +362,7 @@ def run_rastrigin():
         "sigma_iso": 0.01,
         "sigma_line": 0.2,
         "dump_period": 100,
-        "parallel": True,
+        "parallel": False,
         "cvt_use_cache": True,
         "archive_path": "/Users/noju/qdboard/map-elites/runs/",
         "centroids_path": "/Users/noju/qdboard/map-elites/centroids/",

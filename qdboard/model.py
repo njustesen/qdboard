@@ -164,18 +164,16 @@ class Zelda(Problem):
         self.height = height
 
     def evaluate(self, genotype):
-        padding = self.__count(genotype, ['w'], padding=True)
-        keys = self.__count(genotype, ['+'])
-        doors = self.__count(genotype, ['g'])
-        agents = self.__count(genotype, ['A'])
-        #enemies = self.__count(genotype, ['1', '2', '3'])
+
+        free = self.__count(genotype, ['.'])
         enemies1 = self.__count(genotype, ['1'])
         enemies2 = self.__count(genotype, ['2'])
         enemies3 = self.__count(genotype, ['3'])
-        #blocks = self.__count(genotype, ['w'])
-        free = self.__count(genotype, ['.'])
 
-        fitness = -abs(agents - 1) -abs(keys - 1) -abs(doors - 1) - self.width*2 - (self.height-2)*2 + padding
+        fitness = self.__fitness(genotype)
+
+        if fitness > 0:
+            self.__print(genotype)
 
         behavior = [
             min(((self.width*self.height)-(self.width*2+self.height*2))*3, enemies1 * 2 + enemies2 * 3 + enemies3 * 4),
@@ -184,10 +182,54 @@ class Zelda(Problem):
 
         return Solution(genotype, behavior, fitness)
 
+    def __fitness(self, genotype):
+        padding = self.__count(genotype, ['w'], padding=True)
+        keys = self.__count(genotype, ['+'])
+        doors = self.__count(genotype, ['g'])
+        agents = self.__count(genotype, ['A'])
+
+        return  -abs(agents - 1)*5 - abs(keys - 1)*5 - abs(doors - 1)*5 - (self.width*2 + (self.height-2)*2) + padding
+
+    def __print(self, genotype):
+        print("--------------")
+        padding = self.__count(genotype, ['w'], padding=True)
+        keys = self.__count(genotype, ['+'])
+        doors = self.__count(genotype, ['g'])
+        agents = self.__count(genotype, ['A'])
+        # enemies = self.__count(genotype, ['1', '2', '3'])
+        enemies1 = self.__count(genotype, ['1'])
+        enemies2 = self.__count(genotype, ['2'])
+        enemies3 = self.__count(genotype, ['3'])
+        # blocks = self.__count(genotype, ['w'])
+        free = self.__count(genotype, ['.'])
+        fitness = self.__fitness(genotype)
+        print(f"FITNESS: {fitness}")
+        print(f"PADDING: {padding}")
+        print(f"KEYS: {keys}")
+        print(f"DOORS: {doors}")
+        print(f"AGENTS: {agents}")
+        print(f"ENEMIES1: {enemies1}")
+        print(f"ENEMIES2: {enemies2}")
+        print(f"ENEMIES3: {enemies3}")
+        print(f"FREE: {free}")
+        print(f"LEVEL:")
+
+        for y in range(self.height):
+            line = ""
+            for x in range(self.width):
+                i = y*self.width + x
+                line += genotype[i]
+            print(line)
+        print("--------------")
+        fitness = self.__fitness(genotype)
+
     def __count(self, genotype, blocks, padding=False):
         c = 0
-        for i in range(self.x_dims):
-            if not padding or (i % self.width-1 == 0 or i % self.width == 0 or i < self.width or i >= (self.width * self.height) - self.width):
-                if genotype[i] in blocks:
-                    c += 1
+        for y in range(self.height):
+            for x in range(self.width):
+                i = y*self.width + x
+                if not padding or (x == 0 or y == 0 or x == self.width-1 or y == self.height-1):
+                    if genotype[i] in blocks:
+                        c += 1
+
         return c

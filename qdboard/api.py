@@ -63,7 +63,7 @@ b_dimensions_zelda = [
     Dimension("Danger", max_value=((width*height)-(width*2+height*2))*3, min_value=0),
     Dimension("Openness", max_value=(width * height) - (width * 2 + height * 2), min_value=0),
 ]
-problem_zelda = Zelda(width, height, len(b_dimensions_zelda), min_fit=-30, max_fit=0)
+problem_zelda = Zelda(width, height, len(b_dimensions_zelda), min_fit=-10, max_fit=0)
 
 algo_zelda = MapElitesProxy(str(uuid.uuid1()), config_zelda, b_dimensions=b_dimensions_zelda, problem=problem_zelda)
 runs[algo_zelda.run_id] = algo_zelda
