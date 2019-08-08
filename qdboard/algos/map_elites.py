@@ -55,7 +55,7 @@ class MapElitesProxy(QDAlgorithm):
     def get_archive(self):
         fit, desc, x = self.__load_data()
 
-        filename = centroids_filename(self.config, self.problem, config["num_niches"], self.b_dimensions)
+        filename = centroids_filename(self.config, self.problem, self.config["num_niches"], self.b_dimensions)
         centroids = load_centroids(filename)
         vor = Voronoi(centroids[:, 0:2])
         regions, vertices = self.__voronoi_finite_polygons_2d(vor)
@@ -67,7 +67,7 @@ class MapElitesProxy(QDAlgorithm):
         cells = {}
         for i, region in enumerate(regions):
             polygon = vertices[region]
-            cells[i] = Cell(polygon, solutions=[])
+            cells[i] = Cell(polygon.tolist(), solutions=[])
 
         for i in range(0, len(desc)):
             q = kdt.query([desc[i]], k=1)
@@ -331,7 +331,7 @@ if __name__ == "__main__":
     config = {
         "cvt_samples": 25000,
         "batch_size": 100,
-        "random_init": 1000,
+        "random_init": 10,
         "random_init_batch": 100,
         "sigma_iso": 0.01,
         "sigma_line": 0.2,
@@ -340,8 +340,8 @@ if __name__ == "__main__":
         "cvt_use_cache": True,
         "archive_path": "/Users/noju/qdboard/map-elites/runs/",
         "centroids_path": "/Users/noju/qdboard/map-elites/centroids/",
-        "num_niches": 5000,
-        "num_gens": 10000
+        "num_niches": 100,
+        "num_gens": 100000
     }
 
     x_dims = 6

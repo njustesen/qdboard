@@ -34,8 +34,8 @@ b_dims = 2
 b_dimensions = [Dimension(str(i+1), 0, 1) for i in range(b_dims)]
 problem = Rastrigin(x_dims, b_dims)
 
-algo = MapElitesProxy("1", config, b_dimensions=b_dimensions, problem=problem)
-runs["1"] = algo
+algo = MapElitesProxy(str(uuid.uuid1()), config, b_dimensions=b_dimensions, problem=problem)
+runs[algo.run_id] = algo
 algo.start()
 
 
@@ -53,7 +53,11 @@ def get_runs():
     return [run for key, run in runs.items()]
 
 
+def get_run(run_id):
+    return runs[run_id]
+
+
 def get_archive(run_id):
     if run_id not in runs:
         raise Exception(f"Run not found with id {run_id}")
-    return runs[run_id].get_archive
+    return runs[run_id].get_archive()

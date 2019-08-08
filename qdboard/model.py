@@ -24,9 +24,11 @@ class Archive:
         self.cells = cells
         self.dimensions = dimensions
         self.solutions = solutions
-        self.fitness_mean = np.mean([solution.fitness for solution in self.solutions])
-        self.fitness_max = np.max([solution.fitness for solution in self.solutions])
-        self.fitness_min = np.min([solution.fitness for solution in self.solutions])
+        self.fitnesses = [solution.fitness for solution in solutions]
+        self.fitness_std = np.std(self.fitnesses) if len(self.fitnesses) > 0 else None
+        self.fitness_mean = np.mean(self.fitnesses) if len(self.fitnesses) > 0 else None
+        self.fitness_max = np.max(self.fitnesses) if len(self.fitnesses) > 0 else None
+        self.fitness_min = np.min(self.fitnesses) if len(self.fitnesses) > 0 else None
 
     def to_json(self):
         return {
@@ -50,7 +52,7 @@ class Cell:
         return {
             'points': self.points,
             'solutions': [solution.to_json() for solution in self.solutions],
-            'fitness_mean': np.mean(self.fitnesses),
+            'fitness_mean': np.mean(self.fitnesses) if len(self.fitnesses) > 0 else None,
             'fitness_std': np.std(self.fitnesses) if len(self.fitnesses) > 0 else None,
             'fitness_min': np.min(self.fitnesses) if len(self.fitnesses) > 0 else None,
             'fitness_max': np.max(self.fitnesses) if len(self.fitnesses) > 0 else None
@@ -108,13 +110,15 @@ class QDAlgorithm:
 
 class Problem:
 
-    def __init__(self, name, x_dims, b_dims, continuous=True, x_min=0, x_max=1):
+    def __init__(self, name, x_dims, b_dims, min_fit, max_fit, continuous=True, x_min=0, x_max=1):
         self.name = name
         self.x_dims = x_dims
         self.b_dims = b_dims
         self.continuous = continuous
         self.x_min = x_min
         self.x_max = x_max
+        self.min_fit = min_fit
+        self.max_fit = max_fit
 
     def evaluate(self, genotype):
         raise NotImplementedError("Must be overridden by sub-class")
@@ -126,14 +130,16 @@ class Problem:
             'b_dims': self.b_dims,
             'continous': self.continuous,
             'x_min': self.x_min,
-            'x_max': self.x_max
+            'x_max': self.x_max,
+            'min_fit': self.min_fit,
+            'max_fit': self.max_fit
         }
 
 
 class Rastrigin(Problem):
 
-    def __init__(self, x_dims, b_dims):
-        super().__init__(f"Rastrigin-{x_dims}D-{b_dims}D", x_dims=x_dims, b_dims=b_dims)
+    def __init__(self, x_dims, b_dims, min_fit=-100, max_fit=0):
+        super().__init__(f"Rastrigin-{x_dims}D-{b_dims}D", x_dims, b_dims, min_fit, max_fit)
 
     def evaluate(self, genotype):
         fitness = self.__rastrigin(genotype)

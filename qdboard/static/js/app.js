@@ -24,9 +24,9 @@ app.config(['$locationProvider', '$routeProvider',
             controller: 'RunListCtrl',
             access: { requiredAuthentication: true }
         }).
-        when('/run/show/:id', {
+        when('/run/:id', {
             templateUrl: 'static/partials/run.show.html',
-            controller: 'RunListCtrl',
+            controller: 'RunShowCtrl',
             access: { requiredAuthentication: true }
         }).
         otherwise({

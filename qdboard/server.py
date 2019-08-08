@@ -32,9 +32,14 @@ def get_all_runs():
     return json.dumps(run_list)
 
 
-@app.route('/runs/<run_id>', methods=['GET'])
+@app.route('/runs/<run_id>/archive', methods=['GET'])
 def get_archive(run_id):
     return json.dumps(api.get_archive(run_id).to_json())
+
+
+@app.route('/runs/<run_id>', methods=['GET'])
+def get(run_id):
+    return json.dumps(api.get_run(run_id).to_json())
 
 
 def start_server(debug=False, use_reloader=False):
