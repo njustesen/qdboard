@@ -111,11 +111,12 @@ class QDAlgorithm:
 
 class Problem:
 
-    def __init__(self, name, x_dims, b_dims, min_fit, max_fit, continuous=True, x_min=0, x_max=1):
+    def __init__(self, name, x_dims, b_dims, min_fit, max_fit, x_min=0, x_max=1, continuous=True, blocks=None):
         self.name = name
         self.x_dims = x_dims
         self.b_dims = b_dims
         self.continuous = continuous
+        self.blocks = blocks
         self.x_min = x_min
         self.x_max = x_max
         self.min_fit = min_fit
@@ -153,3 +154,40 @@ class Rastrigin(Problem):
         for i in range(0, x.shape[0]):
             f += x[i] * x[i] - 10 * math.cos(2 * math.pi * x[i])
         return -f
+
+
+class Zelda(Problem):
+
+    def __init__(self, width=13, height=9, b_dims=2, min_fit=-100, max_fit=0):
+        super().__init__(f"Zelda-{width}-{height}D-{b_dims}D", width*height, b_dims, min_fit, max_fit, continuous=False, blocks=['.','w','1','2','3','g','A','+'])
+        self.width = width
+        self.height = height
+
+    def evaluate(self, genotype):
+        padding = self.__count(genotype, ['w'], padding=True)
+        keys = self.__count(genotype, ['+'])
+        doors = self.__count(genotype, ['g'])
+        agents = self.__count(genotype, ['A'])
+        #enemies = self.__count(genotype, ['1', '2', '3'])
+        enemies1 = self.__count(genotype, ['1'])
+        enemies2 = self.__count(genotype, ['2'])
+        enemies3 = self.__count(genotype, ['3'])
+        #blocks = self.__count(genotype, ['w'])
+        free = self.__count(genotype, ['.'])
+
+        fitness = -abs(agents - 1) -abs(keys - 1) -abs(doors - 1) - self.width*2 - (self.height-2)*2 + padding
+
+        behavior = [
+            min(((self.width*self.height)-(self.width*2+self.height*2))*3, enemies1 * 2 + enemies2 * 3 + enemies3 * 4),
+            free
+        ]
+
+        return Solution(genotype, behavior, fitness)
+
+    def __count(self, genotype, blocks, padding=False):
+        c = 0
+        for i in range(self.x_dims):
+            if not padding or (i % self.width-1 == 0 or i % self.width == 0 or i < self.width or i >= (self.width * self.height) - self.width):
+                if genotype[i] in blocks:
+                    c += 1
+        return c

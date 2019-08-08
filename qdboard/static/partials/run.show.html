@@ -34,22 +34,44 @@
             <hr />
             <h4 class="text-center">Details</h4>
             <hr />
-            <div id="details-clicked" ng-if="solutionClicked !== null && solutionInFocus === null">
-                <p class="text-center"><b>Genotype: </b><p>
-                <p class="text-center">{{ solutionClicked.genotype }}</p>
-                <p class="text-center"><b>Fitness: </b></p>
-                <p class="text-center">{{ solutionClicked.fitness }} </p>
-                <p class="text-center"><b>Behavior: </b> </p>
-                <p class="text-center">{{ solutionClicked.behavior }} </p>
+            <div ng-if="run.problem.name.split('-')[0]=='Zelda'">
+                <div>
+                    <p class="text-center"><b>Fitness: </b>{{ solutionInFocus.fitness }} </p>
+                </div>
+                <div class="zelda" id="details-clicked" ng-if="solutionClicked !== null && solutionInFocus === null">
+                    <div ng-repeat="y in [] | range:9" style="width: 312px; height: 24px">
+                        <span ng-repeat="x in [] | range:13" style="float:left; width: 24px; height: 24px">
+                            <img src="static/img/zelda/{{ solutionClicked.genotype[y*13+x].replace('.', 'f') }}.png">
+                        </span>
+                    </div>
+                </div>
+                <div class="zelda" id="details-clicked" ng-if="solutionInFocus !== null">
+                    <div ng-repeat="y in [] | range:9" style="width: 312px; height: 24px">
+                        <span ng-repeat="x in [] | range:13" style="float:left; width: 24px; height: 24px">
+                            <img src="static/img/zelda/{{ solutionInFocus.genotype[y*13+x].replace('.', 'f') }}.png">
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div id="details" ng-if="solutionInFocus !== null">
-                <p class="text-center"><b>Genotype: </b><p>
-                <p class="text-center">{{ solutionInFocus.genotype }}</p>
-                <p class="text-center"><b>Fitness: </b></p>
-                <p class="text-center">{{ solutionInFocus.fitness }} </p>
-                <p class="text-center"><b>Behavior: </b> </p>
-                <p class="text-center">{{ solutionInFocus.behavior }} </p>
+            <div ng-if="run.problem.name.split('-')[0]!='Zelda'">
+                <div id="details-clicked" ng-if="solutionClicked !== null && solutionInFocus === null">
+                    <p class="text-center"><b>Genotype: </b><p>
+                    <p class="text-center">{{ solutionClicked.genotype }}</p>
+                    <p class="text-center"><b>Fitness: </b></p>
+                    <p class="text-center">{{ solutionClicked.fitness }} </p>
+                    <p class="text-center"><b>Behavior: </b> </p>
+                    <p class="text-center">{{ solutionClicked.behavior }} </p>
+                </div>
+                <div id="details" ng-if="solutionInFocus !== null">
+                    <p class="text-center"><b>Genotype: </b><p>
+                    <p class="text-center">{{ solutionInFocus.genotype }}</p>
+                    <p class="text-center"><b>Fitness: </b></p>
+                    <p class="text-center">{{ solutionInFocus.fitness }} </p>
+                    <p class="text-center"><b>Behavior: </b> </p>
+                    <p class="text-center">{{ solutionInFocus.behavior }} </p>
+                </div>
             </div>
+
         </div>
 
     </div>

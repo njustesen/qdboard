@@ -11,6 +11,7 @@ from scipy.spatial import Voronoi, voronoi_plot_2d
 from qdboard.model import QDAlgorithm
 import multiprocessing
 import threading
+import random
 from pathlib import Path
 import pickle
 
@@ -88,10 +89,13 @@ class MapElitesProxy(QDAlgorithm):
         latest_gen = self.__latest_gen()
         filename = filename.replace("*", str(latest_gen))
         print("Loading ", filename)
-        data = np.loadtxt(filename)
+        data = np.loadtxt(filename, dtype='str')
         fit = data[:, 0:1]
+        fit = fit.astype(np.float)
         desc = data[:, 1: self.b_dims + 1]
+        desc = desc.astype(np.float)
         x = data[:, self.b_dims + 1:self.b_dims + 1 + self.problem.x_dims]
+        #x = x.astype(np.float)
         return fit, desc, x
 
     def __latest_gen(self):
@@ -202,7 +206,7 @@ class MapElites:
         # init archive (empty)
         self.archive = {}
 
-    def __variation(self, x, archive):
+    def __variation_continous(self, x, archive):
         y = x.copy()
         keys = list(archive.keys())
         z = archive[keys[np.random.randint(len(keys))]].genotype
@@ -219,6 +223,22 @@ class MapElites:
             elem_bounded = max(elem_bounded, self.problem.x_min)
             y_bounded.append(elem_bounded)
         return np.array(y_bounded)
+
+    def __variation_discrete(self, x, archive):
+        y = x.copy()
+        keys = list(archive.keys())
+        z = archive[keys[np.random.randint(len(keys))]].genotype
+        # Uniform Crossover
+        for i in range(self.problem.x_dims):
+            if random.random() < 0.5:
+                y[i] = z[i]
+        # Mutation
+        for i in range(self.config['discrete_muts']):
+            if random.random() <= self.config['discrete_mut_prob']:
+                b = random.randint(0, len(self.problem.blocks)-1)
+                block = self.problem.blocks[b]
+                y[i] = block
+        return np.array(y)
 
     def __write_centroids(self, centroids):
         filename = centroids_filename(self.config, self.problem, self.config["num_niches"], self.b_dimensions)
@@ -294,7 +314,10 @@ class MapElites:
             if g == 0:  # random initialization
                 while (init_count <= self.config['random_init']):
                     for i in range(0, self.config['random_init_batch']):
-                        x = np.random.uniform(self.problem.x_min, self.problem.x_max, 6)
+                        if self.problem.continuous:
+                            x = np.random.uniform(self.problem.x_min, self.problem.x_max, 6)
+                        else:
+                            x = np.random.choice(self.problem.blocks, self.problem.x_dims)
                         to_evaluate += [np.array(x)]
                     if self.config['parallel']:
                         s_list = pool.map(self.problem.evaluate, to_evaluate)
@@ -311,7 +334,10 @@ class MapElites:
                     # parent selection
                     x = self.archive[keys[np.random.randint(len(keys))]]
                     # copy & add variation
-                    z = self.__variation(x.genotype, self.archive)
+                    if self.problem.continuous:
+                        z = self.__variation_continous(x.genotype, self.archive)
+                    else:
+                        z = self.__variation_discrete(x.genotype, self.archive)
                     to_evaluate += [np.array(z)]
                 # parallel evaluation of the fitness
                 if self.config['parallel']:
@@ -327,12 +353,12 @@ class MapElites:
                 self.__save_archive(self.archive, g)
 
 
-if __name__ == "__main__":
+def run_rastrigin():
     config = {
         "cvt_samples": 25000,
         "batch_size": 100,
         "random_init": 10,
-        "random_init_batch": 100,
+        "random_init_batch": 1000,
         "sigma_iso": 0.01,
         "sigma_line": 0.2,
         "dump_period": 100,
@@ -340,7 +366,7 @@ if __name__ == "__main__":
         "cvt_use_cache": True,
         "archive_path": "/Users/noju/qdboard/map-elites/runs/",
         "centroids_path": "/Users/noju/qdboard/map-elites/centroids/",
-        "num_niches": 100,
+        "num_niches": 1000,
         "num_gens": 100000
     }
 
@@ -365,3 +391,41 @@ if __name__ == "__main__":
     time.sleep(10)
     archive = algo.get_archive()
     print(archive.to_json())
+
+
+def run_zelda():
+
+    config = {
+        "cvt_samples": 25000,
+        "batch_size": 100,
+        "random_init": 10,
+        "random_init_batch": 100,
+        "sigma_iso": 0.01,
+        "sigma_line": 0.2,
+        "dump_period": 100,
+        "parallel": True,
+        "cvt_use_cache": True,
+        "archive_path": "/Users/noju/qdboard/map-elites/runs/",
+        "centroids_path": "/Users/noju/qdboard/map-elites/centroids/",
+        "num_niches": 100,
+        "num_gens": 100000,
+        "discrete_muts": 5,
+        "discrete_mut_prob": 0.5
+    }
+
+    width = 13
+    height = 9
+    x_dims = width*height
+    b_dimensions = [
+        Dimension("Danger", max_value=((width*height)-(width*2+height*2))*3, min_value=0),
+        Dimension("Openness", max_value=(width * height) - (width * 2 + height * 2), min_value=0),
+    ]
+    problem = Zelda(width, height, len(b_dimensions), min_fit=-100, max_fit=0)
+
+    algo = MapElitesProxy("1", config, b_dimensions=b_dimensions, problem=problem)
+    algo.start()
+
+
+if __name__ == "__main__":
+
+    run_zelda()

@@ -13,6 +13,7 @@ from qdboard.algos.map_elites import MapElites, MapElitesProxy
 
 runs = {}
 
+'''
 config = {
     "cvt_samples": 25000,
     "batch_size": 100,
@@ -33,10 +34,40 @@ x_dims = 6
 b_dims = 2
 b_dimensions = [Dimension(str(i+1), 0, 1) for i in range(b_dims)]
 problem = Rastrigin(x_dims, b_dims)
-
 algo = MapElitesProxy(str(uuid.uuid1()), config, b_dimensions=b_dimensions, problem=problem)
 runs[algo.run_id] = algo
 algo.start()
+'''
+
+config_zelda = {
+    "cvt_samples": 25000,
+    "batch_size": 100,
+    "random_init": 100,
+    "random_init_batch": 100,
+    "sigma_iso": 0.01,
+    "sigma_line": 0.2,
+    "dump_period": 100,
+    "parallel": True,
+    "cvt_use_cache": True,
+    "archive_path": "/Users/noju/qdboard/map-elites/runs/",
+    "centroids_path": "/Users/noju/qdboard/map-elites/centroids/",
+    "num_niches": 1000,
+    "num_gens": 100000,
+    "discrete_muts": 20,
+    "discrete_mut_prob": 0.2
+}
+
+width = 13
+height = 9
+b_dimensions_zelda = [
+    Dimension("Danger", max_value=((width*height)-(width*2+height*2))*3, min_value=0),
+    Dimension("Openness", max_value=(width * height) - (width * 2 + height * 2), min_value=0),
+]
+problem_zelda = Zelda(width, height, len(b_dimensions_zelda), min_fit=-30, max_fit=0)
+
+algo_zelda = MapElitesProxy(str(uuid.uuid1()), config_zelda, b_dimensions=b_dimensions_zelda, problem=problem_zelda)
+runs[algo_zelda.run_id] = algo_zelda
+algo_zelda.start()
 
 
 def create_run(name, config, dimensions, problem):

@@ -117,12 +117,28 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
+            // text label for the x axis
+            svg.append("text")
+                .attr("transform",
+                    "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+                .style("text-anchor", "middle")
+                .text(archive.dimensions[0].name);
+
             // Add Y axis
             var y = d3.scaleLinear()
                 .domain([archive.dimensions[1].min_value, archive.dimensions[1].max_value])
                 .range([ height, 0]);
             svg.append("g")
                 .call(d3.axisLeft(y));
+
+            // text label for the y axis
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left)
+                .attr("x", 0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text(archive.dimensions[1].name);
 
             // gridlines in x axis function
             function make_x_gridlines() {
@@ -155,12 +171,12 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
 
             // Draw cells
             var scaleX = function(x){
-                let r = x * (archive.dimensions[0].max_value - archive.dimensions[0].min_value) + archive.dimensions[0].min_value;
+                let r = (x - archive.dimensions[0].min_value) / (archive.dimensions[0].max_value - archive.dimensions[0].min_value);
                 return Math.max(Math.min(r * width, width), 0);
             };
 
             var scaleY = function(x){
-                let r = x * (archive.dimensions[1].max_value - archive.dimensions[1].min_value) + archive.dimensions[1].min_value;
+                let r = (x - archive.dimensions[1].min_value) / (archive.dimensions[1].max_value - archive.dimensions[1].min_value);
                 return Math.max(Math.min(height - (r * height), height), 0);
             };
 
@@ -200,44 +216,21 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
             $scope.$apply(function () {
                 if (d.solutions[0] === $scope.solutionClicked){
                     $scope.solutionClicked = null;
-                    // Use D3 to select element, change color and size
-                    d3.select(this).attr({
-                        stroke: 'black',
-                        stroke_width: 1
-                    });
                 } else {
                     $scope.solutionClicked = d.solutions[0];
                     // Use D3 to select element, change color and size
-                    d3.select(this).attr({
-                        fill: 'white',
-                        stroke_width: 2
-                    });
                 }
             });
         }
 
         // Create Event Handlers for mouse
         function handleMouseOver(d, i) {  // Add interactivity
-
-            // Use D3 to select element, change color and size
-            d3.select(this).attr({
-                fill: 'white',
-                stroke_width: 2
-            });
-
             $scope.$apply(function () {
                 $scope.solutionInFocus = d.solutions[0];
             });
         }
 
         function handleMouseOut(d, i) {
-
-            // Use D3 to select element, change color back to normal
-            d3.select(this).attr({
-                stroke: 'black',
-                stroke_width: 1
-            });
-
             $scope.$apply(function () {
                 $scope.solutionInFocus = null;
             });
