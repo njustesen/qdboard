@@ -25,19 +25,16 @@ class Archive:
         self.dimensions = dimensions
         self.solutions = solutions
         self.fitnesses = [solution.fitness for solution in solutions]
-        self.fitness_std = np.std(self.fitnesses) if len(self.fitnesses) > 0 else None
-        self.fitness_mean = np.mean(self.fitnesses) if len(self.fitnesses) > 0 else None
-        self.fitness_max = np.max(self.fitnesses) if len(self.fitnesses) > 0 else None
-        self.fitness_min = np.min(self.fitnesses) if len(self.fitnesses) > 0 else None
 
     def to_json(self):
         return {
             'cells': [cell.to_json() for cell in list(self.cells.values())],
             #'solutions': [solution.to_json() for solution in self.solutions],
             'dimensions': [dim.to_json() for dim in self.dimensions],
-            'fitness_mean': self.fitness_mean,
-            'fitness_min': self.fitness_min,
-            'fitness_max': self.fitness_max
+            'fitness_std': np.std(self.fitnesses) if len(self.fitnesses) > 0 else None,
+            'fitness_mean': np.mean(self.fitnesses) if len(self.fitnesses) > 0 else None,
+            'fitness_min': np.min(self.fitnesses) if len(self.fitnesses) > 0 else None,
+            'fitness_max': np.max(self.fitnesses) if len(self.fitnesses) > 0 else None
         }
 
 
@@ -47,6 +44,10 @@ class Cell:
         self.points = points
         self.solutions = solutions
         self.fitnesses = [solution.fitness for solution in solutions]
+
+    def add_solution(self, solution):
+        self.solutions.append(solution)
+        self.fitnesses.append(solution.fitness)
 
     def to_json(self):
         return {

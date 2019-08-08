@@ -76,7 +76,7 @@ class MapElitesProxy(QDAlgorithm):
             # polygon = vertices[region]
             cell = cells[index]
             solution = Solution(genotype=list(x[i]), behavior=list(desc[i]), fitness=fit[i][0])
-            cell.solutions.append(solution)
+            cell.add_solution(solution)
             solutions.append(solution)
 
         archive = Archive(self.b_dimensions, cells, solutions)

@@ -82,7 +82,7 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
         };
 
         // Color scale
-        $scope.radius = 2;
+        $scope.radius = 1;
 
         $scope.drawMap = function drawMap(run, archive) {
 
@@ -101,19 +101,11 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
 
             //Read the data
             var solutions = [];
-            var regions = [];
             for (var c = 0; c < archive.cells.length; c++) {
                 let cell = archive.cells[c];
                 for (var s = 0; s < cell.solutions.length; s++) {
                     let solution = cell.solutions[s];
                     solutions.push(solution);
-                }
-                regions.push(cell.points);
-            }
-            for (let cell in archive.cells){
-                regions.push(cell.points);
-                for (let s in cell.solutions) {
-                    solutions.push(s.behavior);
                 }
             }
 
@@ -161,6 +153,34 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
                     .tickFormat("")
                 );
 
+            // Draw cells
+            var scaleX = function(x){
+                let r = x * (archive.dimensions[0].max_value - archive.dimensions[0].min_value) + archive.dimensions[0].min_value;
+                return Math.max(Math.min(r * width, width), 0);
+            };
+
+            var scaleY = function(x){
+                let r = x * (archive.dimensions[1].max_value - archive.dimensions[1].min_value) + archive.dimensions[1].min_value;
+                return Math.max(Math.min(height - (r * height), height), 0);
+            };
+
+            svg.selectAll("polygon")
+                .data(archive.cells)
+                .enter().append("polygon")
+                .attr("points",function(d) {
+                        return d.points.map(function(d) { return [scaleX(d[0]), scaleY(d[1])].join(","); }).join(" ");})
+                    .attr("fill", function(d){
+                        if (d.fitness_max === null){
+                            return 'white';
+                        }
+                        return $scope.viridis(d.fitness_max)
+                    })
+                    .attr("stroke", 'black' )
+                    .attr("stroke-width", 0.5)
+                    .on("mouseover", handleMouseOver)
+                    .on("mouseout", handleMouseOut)
+                    .on("click", handleMouseClick);
+
             // Add dots
             svg.append('g')
                 .selectAll("dot")
@@ -170,23 +190,29 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
                     .attr("cx", function (d) { return x(d.behavior[0]); } )
                     .attr("cy", function (d) { return y(d.behavior[1]); } )
                     .attr("r", $scope.radius)
-                    .attr("fill", function(d){return $scope.viridis(d.fitness)} )
-                    .on("mouseover", handleMouseOver)
-                    .on("mouseout", handleMouseOut)
-                    .on("click", handleMousClick)
+                    .attr("fill", 'black' )
 
         };
 
         // Create Event Handlers for mouse
-        function handleMousClick(d, i) {  // Add interactivity
-
-            // Use D3 to select element, change color and size
-            d3.select(this).attr({
-                r: $scope.radius * 4
-            });
+        function handleMouseClick(d, i) {  // Add interactivity
 
             $scope.$apply(function () {
-                $scope.solutionClicked = d;
+                if (d.solutions[0] === $scope.solutionClicked){
+                    $scope.solutionClicked = null;
+                    // Use D3 to select element, change color and size
+                    d3.select(this).attr({
+                        stroke: 'black',
+                        stroke_width: 1
+                    });
+                } else {
+                    $scope.solutionClicked = d.solutions[0];
+                    // Use D3 to select element, change color and size
+                    d3.select(this).attr({
+                        fill: 'white',
+                        stroke_width: 2
+                    });
+                }
             });
         }
 
@@ -195,11 +221,12 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
 
             // Use D3 to select element, change color and size
             d3.select(this).attr({
-                r: $scope.radius * 4
+                fill: 'white',
+                stroke_width: 2
             });
 
             $scope.$apply(function () {
-                $scope.solutionInFocus = d;
+                $scope.solutionInFocus = d.solutions[0];
             });
         }
 
@@ -207,7 +234,8 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
 
             // Use D3 to select element, change color back to normal
             d3.select(this).attr({
-                r: $scope.radius
+                stroke: 'black',
+                stroke_width: 1
             });
 
             $scope.$apply(function () {
