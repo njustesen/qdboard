@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5838fedd-42a3-4aeb-a040-f9c0fc45f134" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qdboard/algos/map_elites.py" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/algos/map_elites.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qdboard/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qdboard/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qdboard/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qdboard/static/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/static/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qdboard/static/js/controllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/static/js/controllers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qdboard/static/less/style.less" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/static/less/style.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qdboard/static/partials/run.list.html" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/static/partials/run.list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qdboard/static/partials/run.show.html" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/static/partials/run.show.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qdboard/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,8 +17,26 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/qdboard/static/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="65" column="17" selection-start-line="65" selection-start-column="17" selection-end-line="65" selection-end-column="17" />
+            <state relative-caret-position="287">
+              <caret line="90" column="26" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/qdboard/static/partials/run.show.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="371">
+              <caret line="38" column="57" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/qdboard/static/partials/run.list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -52,8 +62,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/qdboard/static/less/style.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+            <state relative-caret-position="105">
+              <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -78,24 +88,6 @@
               <folding>
                 <element signature="e#201#250#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/anaconda3/envs/qdboard/lib/python3.6/json/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3420">
-              <caret line="230" selection-start-line="230" selection-end-line="230" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/anaconda3/envs/qdboard/lib/python3.6/json/encoder.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2970">
-              <caret line="198" selection-start-line="198" selection-end-line="198" />
             </state>
           </provider>
         </entry>
@@ -187,8 +179,6 @@
         <option value="$PROJECT_DIR$/qdboard/static/lib/CanvasJS/canvasjs.min.js" />
         <option value="$PROJECT_DIR$/qdboard/static/lib/canvasjs/canvasjs.min.js" />
         <option value="$PROJECT_DIR$/qdboard/static/js/app.js" />
-        <option value="$PROJECT_DIR$/qdboard/static/partials/run.show.html" />
-        <option value="$PROJECT_DIR$/qdboard/static/less/style.less" />
         <option value="$PROJECT_DIR$/qdboard/static/js/services.js" />
         <option value="$PROJECT_DIR$/qdboard/server.py" />
         <option value="$PROJECT_DIR$/qdboard/static/lib/plotly/plotly-latest.min.js" />
@@ -197,6 +187,8 @@
         <option value="$PROJECT_DIR$/qdboard/templates/index.html" />
         <option value="$PROJECT_DIR$/qdboard/model.py" />
         <option value="$PROJECT_DIR$/qdboard/api.py" />
+        <option value="$PROJECT_DIR$/qdboard/static/partials/run.show.html" />
+        <option value="$PROJECT_DIR$/qdboard/static/less/style.less" />
         <option value="$PROJECT_DIR$/qdboard/static/js/controllers.js" />
       </list>
     </option>
@@ -263,6 +255,13 @@
               <item name="static" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="d3" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qdboard" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
+              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="partials" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="qdboard" type="b2602c69:ProjectViewProjectNode" />
@@ -375,23 +374,23 @@
       <updated>1565114652035</updated>
       <workItem from="1565114657598" duration="4243000" />
       <workItem from="1565119098654" duration="27316000" />
-      <workItem from="1565249846663" duration="2501000" />
+      <workItem from="1565249846663" duration="4851000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34060000" />
+    <option name="totallyTimeSpent" value="36410000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="947" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18681319" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18681319" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32982457" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.24795322" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.24795322" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.29137528" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -583,13 +582,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/qdboard/static/partials/run.list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/qdboard/static/lib/canvasjs/canvasjs.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="691">
@@ -607,24 +599,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/qdboard/static/partials/run.show.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/qdboard/static/js/services.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="77" selection-start-line="8" selection-start-column="77" selection-end-line="8" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qdboard/static/less/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -666,13 +644,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/qdboard/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/qdboard/model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1657">
@@ -703,10 +674,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/qdboard/static/partials/run.list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qdboard/static/partials/run.show.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="38" column="57" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qdboard/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qdboard/static/less/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/qdboard/static/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="65" column="17" selection-start-line="65" selection-start-column="17" selection-end-line="65" selection-end-column="17" />
+        <state relative-caret-position="287">
+          <caret line="90" column="26" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
         </state>
       </provider>
     </entry>
