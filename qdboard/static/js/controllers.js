@@ -71,10 +71,22 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
             });
         };
 
+        $scope.checkForReload = function checkForReload(time){
+            setTimeout(function(){
+                if (!$scope.reloading){
+                    $scope.loadArchive($scope.run_id);
+                    $scope.checkForReload(time);
+                }
+            }, time);
+        };
+
         $scope.loadArchive = function loadArchive(id){
+            $scope.reloading = true;
             RunService.getArchive(id).success(function(data) {
                 $scope.archive = data;
                 $scope.drawMap($scope.run, $scope.archive);
+                $scope.reloading = false;
+                $scope.checkForReload(0);
             }).error(function(status, data) {
                 console.log(status);
                 console.log(data);
@@ -85,6 +97,8 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
         $scope.radius = 1;
 
         $scope.drawMap = function drawMap(run, archive) {
+
+            $('#map').empty();
 
             // set the dimensions and margins of the graph
             var margin = {top: 10, right: 30, bottom: 30, left: 60},
@@ -237,6 +251,7 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
             //console.log($scope.solutionInFocus);
         }
 
+        $scope.reloading = false;
         $scope.solutionInFocus = null;
         $scope.solutionClicked = null;
         $scope.run_id = $routeParams.id;

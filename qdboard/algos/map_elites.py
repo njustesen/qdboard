@@ -317,7 +317,7 @@ class MapElites:
                         if self.problem.continuous:
                             x = np.random.uniform(self.problem.x_min, self.problem.x_max, 6)
                         else:
-                            x = np.random.choice(self.problem.blocks, self.problem.x_dims)
+                            x = np.random.choice(self.problem.blocks, self.problem.x_dims, p=self.config['block_probs'])
                         to_evaluate += [np.array(x)]
                     if self.config['parallel']:
                         s_list = pool.map(self.problem.evaluate, to_evaluate)

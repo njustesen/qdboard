@@ -38,7 +38,7 @@
 
                 <div class="zelda" id="details-clicked" ng-if="solutionClicked !== null && solutionInFocus === null">
                     <div>
-                        <p class="text-center"><b>Fitness: </b>{{ solutionClicked.fitness }} </p>
+                        <p class="text-left"><b>Fitness: </b>{{ solutionClicked.fitness }} </p>
                     </div>
                     <div ng-repeat="y in [] | range:9" style="width: 312px; height: 24px">
                         <span ng-repeat="x in [] | range:13" style="float:left; width: 24px; height: 24px">
@@ -48,7 +48,7 @@
                 </div>
                 <div class="zelda" id="details-clicked" ng-if="solutionInFocus !== null">
                     <div>
-                        <p class="text-center"><b>Fitness: </b>{{ solutionInFocus.fitness }} </p>
+                        <p class="text-left"><b>Fitness: </b>{{ solutionInFocus.fitness }} </p>
                     </div>
                     <div ng-repeat="y in [] | range:9" style="width: 312px; height: 24px">
                         <span ng-repeat="x in [] | range:13" style="float:left; width: 24px; height: 24px">

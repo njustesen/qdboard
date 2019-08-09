@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5838fedd-42a3-4aeb-a040-f9c0fc45f134" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qdboard/algos/map_elites.py" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/algos/map_elites.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qdboard/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qdboard/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qdboard/static/js/controllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/static/js/controllers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qdboard/static/partials/run.show.html" beforeDir="false" afterPath="$PROJECT_DIR$/qdboard/static/partials/run.show.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +20,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/qdboard/static/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="236" column="39" lean-forward="true" selection-start-line="236" selection-start-column="39" selection-end-line="236" selection-end-column="39" />
+            <state relative-caret-position="148">
+              <caret line="127" column="77" selection-start-line="127" selection-start-column="65" selection-end-line="127" selection-end-column="77" />
             </state>
           </provider>
         </entry>
@@ -27,8 +29,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/qdboard/static/partials/run.show.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="50" column="81" selection-start-line="50" selection-start-column="81" selection-end-line="50" selection-end-column="81" />
+            <state relative-caret-position="87">
+              <caret line="33" column="18" lean-forward="true" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="18" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -39,21 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/qdboard/static/img/zelda/f.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/qdboard/static/img/zelda/w.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/qdboard/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="190" column="89" selection-start-line="190" selection-start-column="89" selection-end-line="190" selection-end-column="89" />
+            <state relative-caret-position="182">
+              <caret line="283" column="9" selection-start-line="283" selection-start-column="9" selection-end-line="283" selection-end-column="9" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -73,8 +65,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/qdboard/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="25" />
+            <state relative-caret-position="390">
+              <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -82,8 +74,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/qdboard/algos/map_elites.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="322" selection-start-line="322" selection-end-line="322" />
+            <state relative-caret-position="182">
+              <caret line="90" column="14" selection-start-line="90" selection-start-column="8" selection-end-line="90" selection-end-column="14" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
               </folding>
@@ -103,8 +95,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/qdboard/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="65" column="72" selection-start-line="65" selection-start-column="72" selection-end-line="65" selection-end-column="72" />
+            <state relative-caret-position="371">
+              <caret line="69" column="22" lean-forward="true" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
               <folding>
                 <element signature="e#177#190#0" expanded="true" />
               </folding>
@@ -123,11 +115,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>__centroids_filename</find>
-      <find>__write_centroids</find>
-      <find>Species</find>
-      <find>.x</find>
-      <find>zero_count</find>
       <find>same_count</find>
       <find>__save_archive</find>
       <find>save_ar</find>
@@ -135,7 +122,6 @@
       <find>run_id</find>
       <find>dimensions</find>
       <find>problem</find>
-      <find>centroids</find>
       <find>centroids_fi</find>
       <find>__load_centroids</find>
       <find>load_centro</find>
@@ -151,8 +137,14 @@
       <find>toggle</find>
       <find>variation</find>
       <find>&quot;&gt;&lt;img</find>
-      <find>x_dims</find>
+      <find>dimensions[</find>
       <find>load</find>
+      <find>x_dims</find>
+      <find>centroids</find>
+      <find>13</find>
+      <find>print</find>
+      <find>print(</find>
+      <find>__print</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;&gt;\n\t\t\t\t\t&lt;img</replace>
@@ -187,8 +179,9 @@
         <option value="$PROJECT_DIR$/qdboard/templates/index.html" />
         <option value="$PROJECT_DIR$/qdboard/static/less/style.less" />
         <option value="$PROJECT_DIR$/qdboard/static/js/controllers.js" />
-        <option value="$PROJECT_DIR$/qdboard/algos/map_elites.py" />
+        <option value="$PROJECT_DIR$/qdboard/astar/astar.py" />
         <option value="$PROJECT_DIR$/qdboard/static/partials/run.show.html" />
+        <option value="$PROJECT_DIR$/qdboard/algos/map_elites.py" />
         <option value="$PROJECT_DIR$/qdboard/api.py" />
         <option value="$PROJECT_DIR$/qdboard/model.py" />
       </list>
@@ -233,40 +226,6 @@
               <item name="qdboard" type="b2602c69:ProjectViewProjectNode" />
               <item name="qdboard" type="462c0819:PsiDirectoryNode" />
               <item name="qdboard" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="qdboard" type="b2602c69:ProjectViewProjectNode" />
-              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
-              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="qdboard" type="b2602c69:ProjectViewProjectNode" />
-              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
-              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="qdboard" type="b2602c69:ProjectViewProjectNode" />
-              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
-              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="qdboard" type="b2602c69:ProjectViewProjectNode" />
-              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
-              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="partials" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="qdboard" type="b2602c69:ProjectViewProjectNode" />
-              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
-              <item name="qdboard" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -301,6 +260,28 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.server_example">
+    <configuration name="astar" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="qd-board" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/qdboard/astar" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/qdboard/astar/astar.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="map_elites" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="qd-board" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -385,6 +366,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.server_example" />
+        <item itemvalue="Python.astar" />
         <item itemvalue="Python.map_elites" />
         <item itemvalue="Python.model" />
       </list>
@@ -402,24 +384,23 @@
       <updated>1565114652035</updated>
       <workItem from="1565114657598" duration="4243000" />
       <workItem from="1565119098654" duration="27316000" />
-      <workItem from="1565249846663" duration="17700000" />
+      <workItem from="1565249846663" duration="27873000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49259000" />
+    <option name="totallyTimeSpent" value="59432000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="947" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18681319" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18681319" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32982457" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2725146" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.580117" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2725146" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.580117" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -449,12 +430,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/qdboard/model.py</url>
-          <line>45</line>
+          <line>155</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/qdboard/model.py</url>
-          <line>56</line>
+          <line>166</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -464,19 +445,35 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/qdboard/model.py</url>
-          <line>222</line>
+          <line>386</line>
           <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/qdboard/model.py</url>
+          <line>319</line>
+          <option name="timeStamp" value="41" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/qdboard$model.coverage" NAME="model Coverage Results" MODIFIED="1565268468359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/qdboard" />
+    <SUITE FILE_PATH="coverage/qdboard$astar.coverage" NAME="astar Coverage Results" MODIFIED="1565340818919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/qdboard/astar" />
     <SUITE FILE_PATH="coverage/qdboard$map_elites.coverage" NAME="map_elites Coverage Results" MODIFIED="1565268573233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/qdboard/algos" />
-    <SUITE FILE_PATH="coverage/qdboard$server_example.coverage" NAME="server_example Coverage Results" MODIFIED="1565268618178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
+    <SUITE FILE_PATH="coverage/qdboard$server_example.coverage" NAME="server_example Coverage Results" MODIFIED="1565349909664" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>len(from_agent_to_key)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>-abs(agents - 1)*5 - abs(keys - 1)*5 - abs(doors - 1)*5 - (self.width*2 + (self.height-2)*2) + padding + danger_bonus</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>(-self.width*2 - (self.height-2)*2)</expression-string>
         <language-id>Python</language-id>
@@ -509,16 +506,6 @@
       </expression>
       <expression>
         <expression-string>runs['1']</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>runs</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>runs{&quot;1&quot;}</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -701,10 +688,20 @@
     <entry file="file://$PROJECT_DIR$/qdboard/static/img/zelda/f.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/qdboard/static/js/controllers.js">
+    <entry file="file://$USER_HOME$/anaconda3/envs/qdboard/lib/python3.6/multiprocessing/pool.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="236" column="39" lean-forward="true" selection-start-line="236" selection-start-column="39" selection-end-line="236" selection-end-column="39" />
+        <state relative-caret-position="104">
+          <caret line="265" selection-start-line="265" selection-end-line="265" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qdboard/astar/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qdboard/astar/astar.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="457">
+          <caret line="138" column="10" lean-forward="true" selection-start-line="6" selection-end-line="138" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -717,15 +714,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/qdboard/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="25" />
+        <state relative-caret-position="390">
+          <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/qdboard/static/partials/run.show.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="50" column="81" selection-start-line="50" selection-start-column="81" selection-end-line="50" selection-end-column="81" />
+        <state relative-caret-position="87">
+          <caret line="33" column="18" lean-forward="true" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="18" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -735,27 +732,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/qdboard/static/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="127" column="77" selection-start-line="127" selection-start-column="65" selection-end-line="127" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/qdboard/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="65" column="72" selection-start-line="65" selection-start-column="72" selection-end-line="65" selection-end-column="72" />
+        <state relative-caret-position="371">
+          <caret line="69" column="22" lean-forward="true" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
           <folding>
             <element signature="e#177#190#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/qdboard/lib/python3.6/multiprocessing/pool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="265" selection-start-line="265" selection-end-line="265" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/qdboard/algos/map_elites.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="322" selection-start-line="322" selection-end-line="322" />
+        <state relative-caret-position="182">
+          <caret line="90" column="14" selection-start-line="90" selection-start-column="8" selection-end-line="90" selection-end-column="14" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
           </folding>
@@ -764,8 +761,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/qdboard/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="190" column="89" selection-start-line="190" selection-start-column="89" selection-end-line="190" selection-end-column="89" />
+        <state relative-caret-position="182">
+          <caret line="283" column="9" selection-start-line="283" selection-start-column="9" selection-end-line="283" selection-end-column="9" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

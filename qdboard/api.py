@@ -42,11 +42,11 @@ algo.start()
 config_zelda = {
     "cvt_samples": 25000,
     "batch_size": 100,
-    "random_init": 100,
-    "random_init_batch": 100,
+    "random_init": 50,
+    "random_init_batch": 50,
     "sigma_iso": 0.01,
     "sigma_line": 0.2,
-    "dump_period": 100,
+    "dump_period": 10,
     "parallel": True,
     "cvt_use_cache": True,
     "archive_path": "/Users/noju/qdboard/map-elites/runs/",
@@ -54,16 +54,18 @@ config_zelda = {
     "num_niches": 1000,
     "num_gens": 100000,
     "discrete_muts": 20,
-    "discrete_mut_prob": 0.2
+    "discrete_mut_prob": 0.2,
+    "block_probs": [0.2, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
 }
 
 width = 13
 height = 9
+spaces = ((width*height)-(width*2+height*2))
 b_dimensions_zelda = [
-    Dimension("Danger", max_value=((width*height)-(width*2+height*2))*3, min_value=0),
-    Dimension("Openness", max_value=(width * height) - (width * 2 + height * 2), min_value=0),
+    Dimension("Danger", max_value=spaces, min_value=0),
+    Dimension("Openness", max_value=spaces, min_value=0),
 ]
-problem_zelda = Zelda(width, height, len(b_dimensions_zelda), min_fit=-10, max_fit=0)
+problem_zelda = Zelda(width, height, len(b_dimensions_zelda), min_fit=-50, max_fit=0, max_danger=spaces)
 
 algo_zelda = MapElitesProxy(str(uuid.uuid1()), config_zelda, b_dimensions=b_dimensions_zelda, problem=problem_zelda)
 runs[algo_zelda.run_id] = algo_zelda
