@@ -1,0 +1,13 @@
+.container {
+  margin-top: 60px;
+}
+#map {
+  width: 600px;
+  margin: auto;
+  padding: 10px;
+}
+.grid line {
+  stroke: lightgrey;
+  stroke-opacity: 1;
+  shape-rendering: crispEdges;
+}
