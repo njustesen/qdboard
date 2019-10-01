@@ -9,6 +9,7 @@ Run this script to start a Flask server locally. The server will start a Host, w
 from flask import Flask, request, render_template
 from qdboard import api
 import json
+import numpy as np
 
 app = Flask(__name__)
 
@@ -32,9 +33,21 @@ def get_all_runs():
     return json.dumps(run_list)
 
 
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        else:
+            return super(NpEncoder, self).default(obj)
+
+
 @app.route('/runs/<run_id>/archive', methods=['GET'])
 def get_archive(run_id):
-    return json.dumps(api.get_archive(run_id).to_json())
+    return json.dumps(api.get_archive(run_id).to_json(), cls=NpEncoder)
 
 
 @app.route('/runs/<run_id>', methods=['GET'])
