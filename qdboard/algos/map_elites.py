@@ -14,28 +14,14 @@ import threading
 import random
 from pathlib import Path
 import pickle
+import os.path
 
 
-def centroids_filename(config, problem, num_niches, dimensions):
-    filename = f'centroids_{problem.name.strip()}_{problem.x_dims}_{problem.b_dims}_{num_niches}_{"-".join([dimension.name for dimension in dimensions])}.dat'
-    return os.path.join(config['centroids_path'], filename)
+class MapElites(QDAlgorithm):
 
-
-def archive_filename(config, run_id):
-    filename = f'archive_{run_id}_*.dat'
-    return os.path.join(config['archive_path'], filename)
-
-
-def load_centroids(filename):
-    points = np.loadtxt(filename)
-    return points
-
-
-class MapElitesProxy(QDAlgorithm):
-
-    def __init__(self, run_id, config, b_dimensions, problem):
-        super().__init__(run_id, config, b_dimensions, problem)
-        self.map_elites = MapElites(run_id, config, b_dimensions, problem)
+    def __init__(self, run_id, config, b_dimensions, problem, img_visualizer=None):
+        super().__init__(run_id, config, b_dimensions, problem, img_visualizer)
+        self.map_elites = MapElitesRunner(run_id, config, b_dimensions, problem, img_visualizer=img_visualizer)
 
     def start(self):
         self.t = threading.Thread(name='child procs', target=self.map_elites.compute)
@@ -51,13 +37,25 @@ class MapElitesProxy(QDAlgorithm):
         self.t.join()
 
     def is_done(self):
-        return self.__latest_gen() == self.config['num_gens']
+        latest_gen = self.__latest_gen()
+        if latest_gen is None:
+            return False
+        return latest_gen == self.config['num_gens']
 
     def get_archive(self):
-        fit, desc, x = self.__load_data()
 
-        filename = centroids_filename(self.config, self.problem, self.config["num_niches"], self.b_dimensions)
-        centroids = load_centroids(filename)
+        filename = self.map_elites.get_archive_filename()
+        latest_gen = self.__latest_gen()
+        if latest_gen is None:
+            return {}
+
+        filename = filename.replace("*", str(latest_gen))
+        archive = pickle.load(open(f'{filename}', "rb"))
+
+        # fit, desc, x = self.__load_data()
+
+        filename = self.map_elites.get_centroids_filename()
+        centroids = self.map_elites.load_centroids(filename)
         vor = Voronoi(centroids[:, 0:2])
         regions, vertices = self.__voronoi_finite_polygons_2d(vor)
 
@@ -70,22 +68,25 @@ class MapElitesProxy(QDAlgorithm):
             polygon = vertices[region]
             cells[i] = Cell(polygon.tolist(), solutions=[])
 
-        for i in range(0, len(desc)):
-            q = kdt.query([desc[i]], k=1)
+        for key, solution in archive.items():
+            img = None
+            if self.img_visualizer is not None:
+                img = self.img_visualizer.get_rel_path(solution)
+            s = Solution(solution.solution_id, solution.genotype.tolist(), solution.behavior, solution.fitness, solution.phenotype.tolist(), img=img)
+            q = kdt.query([solution.behavior], k=1)
             index = q[1][0][0]
             region = regions[index]
             # polygon = vertices[region]
             cell = cells[index]
-            solution = Solution(genotype=list(x[i]), behavior=list(desc[i]), fitness=fit[i][0])
-            cell.add_solution(solution)
-            solutions.append(solution)
+            cell.add_solution(s)
+            solutions.append(s)
 
         archive = Archive(self.b_dimensions, cells, solutions)
 
         return archive
 
     def __load_data(self):
-        filename = archive_filename(self.config, self.run_id)
+        filename = self.map_elites.get_archive_filename()
         latest_gen = self.__latest_gen()
         filename = filename.replace("*", str(latest_gen))
         print("Loading ", filename)
@@ -99,13 +100,16 @@ class MapElitesProxy(QDAlgorithm):
         return fit, desc, x
 
     def __latest_gen(self):
-        filename = archive_filename(self.config, self.run_id)
+        filename = self.map_elites.get_archive_filename()
         archive_files = glob.glob(filename)
         latest_gen = -1
         for file in archive_files:
-            gen = int(file.split(".dat")[0].split("_")[-1])
+           #  gen = int(file.split(".dat")[0].split("_")[-1])
+            gen = int(file.split(".p")[0].split("_")[-1])
             if gen > latest_gen:
                 latest_gen = gen
+        if latest_gen == -1:
+            return None
         return latest_gen
 
     def __voronoi_finite_polygons_2d(self, vor, radius=None):
@@ -192,9 +196,9 @@ class MapElitesProxy(QDAlgorithm):
         return new_regions, np.asarray(new_vertices)
 
 
-class MapElites:
+class MapElitesRunner:
 
-    def __init__(self, run_id, config, b_dimensions, problem):
+    def __init__(self, run_id, config, b_dimensions, problem, img_visualizer=None):
         self.run_id = run_id
         self.config = config
         self.b_dimensions = b_dimensions
@@ -204,6 +208,7 @@ class MapElites:
         self.b_mins = [dimension.min_value for dimension in self.b_dimensions]
         self.b_maxs = [dimension.max_value for dimension in self.b_dimensions]
         # init archive (empty)
+        self.img_visualizer = img_visualizer
         self.archive = {}
 
     def __variation_continous(self, x, archive):
@@ -241,7 +246,7 @@ class MapElites:
         return np.array(y)
 
     def __write_centroids(self, centroids):
-        filename = centroids_filename(self.config, self.problem, self.config["num_niches"], self.b_dimensions)
+        filename = self.get_centroids_filename()
         with open(filename, 'w') as f:
             for p in centroids:
                 for item in p:
@@ -251,7 +256,7 @@ class MapElites:
     def __cvt(self, k, cvt_use_cache=True):
         # check if we have cached values
         if cvt_use_cache:
-            fname = centroids_filename(self.config, self.problem, self.config["num_niches"], self.b_dimensions)
+            fname = self.get_centroids_filename()
             if Path(fname).is_file():
                 print("WARNING: using cached CVT:", fname)
                 return np.loadtxt(fname)
@@ -269,6 +274,7 @@ class MapElites:
     # format: centroid fitness desc x \n
     # centroid, desc and x are vectors
     def __save_archive(self, archive, gen):
+        '''
         def write_array(a, f):
             for i in a:
                 f.write(str(i) + ' ')
@@ -281,19 +287,36 @@ class MapElites:
                 write_array(k.behavior, f)
                 write_array(k.genotype, f)
                 f.write("\n")
+        '''
+
+        if self.img_visualizer is not None:
+            for key, solution in archive.items():
+                self.img_visualizer.save_visualization(solution)
+
+        filename = self.get_archive_filename()
+        filename = filename.replace("*", str(gen))
+        pickle.dump(archive, open(f'{filename}', 'wb'))
 
     def __add_to_archive(self, s, kdt):
         niche_index = kdt.query([s.behavior], k=1)[1][0][0]
         niche = kdt.data[niche_index]
         n = self.__make_hashable(niche)
-        if n in self.archive:
-            if s.fitness > self.archive[n].fitness:
+        elite = self.archive[s] if s in self.archive else None
+        if elite is not None:
+            if s.fitness > elite.fitness:
+                if self.img_visualizer is not None:
+                    elite_path = self.img_visualizer.get_rel_path(elite)
+                    os.remove(elite_path)
                 self.archive[n] = s
         else:
             self.archive[n] = s
 
     # map-elites algorithm (CVT variant)
     def compute(self):
+
+        # Save empty archive
+        self.__save_archive(self.archive, 0)
+
         num_cores = multiprocessing.cpu_count()
         pool = multiprocessing.Pool(num_cores)
 
@@ -312,15 +335,17 @@ class MapElites:
 
             to_evaluate = []
             if g == 0:  # random initialization
-                while (init_count <= self.config['random_init']):
+                while init_count <= self.config['random_init']:
                     for i in range(0, self.config['random_init_batch']):
                         if self.problem.continuous:
-                            x = np.random.uniform(self.problem.x_min, self.problem.x_max, 6)
+                            x = np.random.uniform(self.problem.x_min, self.problem.x_max, self.problem.x_dims)
                         else:
                             x = np.random.choice(self.problem.blocks, self.problem.x_dims, p=self.config['block_probs'])
                         to_evaluate += [np.array(x)]
                     if self.config['parallel']:
                         s_list = pool.map(self.problem.evaluate, to_evaluate)
+                    elif self.config['batched']:
+                        s_list = self.problem.evaluate_batch(to_evaluate)
                     else:
                         s_list = map(self.problem.evaluate, to_evaluate)
                     for s in s_list:
@@ -342,90 +367,26 @@ class MapElites:
                 # parallel evaluation of the fitness
                 if self.config['parallel']:
                     s_list = pool.map(self.problem.evaluate, to_evaluate)
+                elif self.config['batched']:
+                    s_list = self.problem.evaluate_batch(to_evaluate)
                 else:
                     s_list = map(self.problem.evaluate, to_evaluate)
                 # natural selection
                 for s in s_list:
                     self.__add_to_archive(s, kdt)
             # write archive
-            if self.config['num_gens'] == g or (g % self.config['dump_period'] == 0 and self.config['dump_period'] != -1):
+            if self.config['num_gens'] == g or g == 0 or (g % self.config['dump_period'] == 0 and self.config['dump_period'] != -1):
                 print("generation:", g)
                 self.__save_archive(self.archive, g)
 
+    def get_centroids_filename(self):
+        filename = f'centroids_{self.problem.name.strip()}_{self.problem.x_dims}_{self.problem.b_dims}_{self.config["num_niches"]}_{"-".join([dimension.name for dimension in self.b_dimensions])}.dat'
+        return os.path.join(self.config['centroids_path'], filename)
 
-def run_rastrigin():
-    config = {
-        "cvt_samples": 25000,
-        "batch_size": 100,
-        "random_init": 10,
-        "random_init_batch": 1000,
-        "sigma_iso": 0.01,
-        "sigma_line": 0.2,
-        "dump_period": 100,
-        "parallel": False,
-        "cvt_use_cache": True,
-        "archive_path": "/Users/noju/qdboard/map-elites/runs/",
-        "centroids_path": "/Users/noju/qdboard/map-elites/centroids/",
-        "num_niches": 1000,
-        "num_gens": 100000
-    }
+    def get_archive_filename(self):
+        filename = f'archive_{self.run_id}_*.p'
+        return os.path.join(self.config['archive_path'], filename)
 
-    x_dims = 6
-    b_dims = 2
-    b_dimensions = [Dimension(str(i+1), 0, 1) for i in range(b_dims)]
-    problem = Rastrigin(x_dims, b_dims)
-
-    algo = MapElitesProxy("1", config, b_dimensions=b_dimensions, problem=problem)
-    algo.start()
-
-    time.sleep(5)
-    archive = algo.get_archive()
-    print(archive.to_json())
-
-    time.sleep(5)
-    archive = algo.get_archive()
-    print(archive.to_json())
-
-    algo.stop()
-
-    time.sleep(10)
-    archive = algo.get_archive()
-    print(archive.to_json())
-
-
-def run_zelda():
-
-    config = {
-        "cvt_samples": 25000,
-        "batch_size": 100,
-        "random_init": 10,
-        "random_init_batch": 100,
-        "sigma_iso": 0.01,
-        "sigma_line": 0.2,
-        "dump_period": 100,
-        "parallel": True,
-        "cvt_use_cache": True,
-        "archive_path": "/Users/noju/qdboard/map-elites/runs/",
-        "centroids_path": "/Users/noju/qdboard/map-elites/centroids/",
-        "num_niches": 100,
-        "num_gens": 100000,
-        "discrete_muts": 5,
-        "discrete_mut_prob": 0.5
-    }
-
-    width = 13
-    height = 9
-    x_dims = width*height
-    b_dimensions = [
-        Dimension("Danger", max_value=((width*height)-(width*2+height*2))*3, min_value=0),
-        Dimension("Openness", max_value=(width * height) - (width * 2 + height * 2), min_value=0),
-    ]
-    problem = Zelda(width, height, len(b_dimensions), min_fit=-100, max_fit=0)
-
-    algo = MapElitesProxy("1", config, b_dimensions=b_dimensions, problem=problem)
-    algo.start()
-
-
-if __name__ == "__main__":
-
-    run_zelda()
+    def load_centroids(self, filename):
+        points = np.loadtxt(filename)
+        return points
