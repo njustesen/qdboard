@@ -130,6 +130,15 @@ appControllers.controller('RunShowCtrl', ['$scope', '$routeParams', '$window', '
             });
         };
 
+        $scope.solutionToShow = function(){
+            if ($scope.solutionInFocus !== null){
+                return $scope.solutionInFocus;
+            } else if ($dcope.solutionClicked !== null){
+                return $scope.solutionClicked;
+            }
+            return null;
+        };
+
         // Color scale
         $scope.radius = 1;
 

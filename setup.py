@@ -11,7 +11,9 @@ setup(name='qdboard',
           'python-interface',
           'stopit',
           'scikit-learn',
-          'scipy'
+          'scipy',
+          'matplotlib',
+          'Pillow'
       ],
       packages=find_packages()
 )
