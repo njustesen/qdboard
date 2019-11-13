@@ -1,5 +1,10 @@
 # Node
 node_modules/*
+qdboard/node_modules/*
+
+.DS_Store
+qdboard/static/img/*
+qdboard/results/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
