@@ -4,6 +4,7 @@ import os
 import json
 import numpy as np
 import uuid
+import qdboard
 from qdboard.algos.map_elites import MapElites
 from qdboard.api import add_run
 import qdboard.server as server
@@ -36,17 +37,21 @@ class Node():
 # Define problem to optimize
 class Zelda(Problem):
 
-    def __init__(self, width=13, height=9, b_dims=2, min_fit=-100, max_fit=0, max_danger=24):
+    def __init__(self, width=13, height=9, b_dims=2, min_fit=-100, max_fit=0, max_danger=24, vary=None):
         super().__init__(f"Zelda-{width}-{height}D-{b_dims}D", width*height, b_dims, min_fit, max_fit, continuous=False, blocks=['.','w','1','2','3','g','A','+'])
         self.width = width
         self.height = height
         self.max_danger = max_danger
+        self.vary = vary
 
     def evaluate(self, genotype):
 
         free = self.__count(genotype, ['.'])
         danger = self.__danger(genotype)
-        fitness = self.__fitness(genotype)
+        if self.vary is None:
+            fitness = self.__fitness(genotype)
+        else:
+            fitness = self.__fitness_similarity(genotype)
 
         #if fitness > 0:
         #    self.__print(genotype)
@@ -57,6 +62,10 @@ class Zelda(Problem):
         ]
 
         return Solution(str(uuid.uuid1()), genotype, behavior, phenotype=genotype, fitness=fitness, img=None)
+
+    def __fitness_similarity(self, genotype):
+        diff = [(1 if genotype[i] == self.vary[i] else 0) for i in range(len(genotype))]
+        return np.sum(diff) / (self.width * self.height)
 
     def __danger(self, genotype):
         enemies1 = self.__count(genotype, ['1'])
@@ -337,13 +346,31 @@ class ZeldaImgVisualizer(ImgVisualizer):
 
     def __visualize_level(self, level, title=None):
 
-        writer = SpriteSheetWriter(24, width=13, height=9)
+        writer = SpriteSheetWriter(24, width=self.width, height=self.height)
 
         for i in range(len(level)):
             writer.addImage(self.tiles[level[i]])
 
         writer.save(os.path.join(self.path, f'{title}.png'))
         writer.close()
+
+
+class FileHandler:
+
+    def load_level(self, path):
+        level = []
+        with open(path) as f:
+            for line in f:
+                for c in line:
+                    if c != '\n':
+                        level.append(c)
+        return level
+
+
+def get_data_path(rel_path):
+    root_dir = qdboard.__file__.replace("__init__.py", "")
+    filename = os.path.join(root_dir, rel_path)
+    return os.path.abspath(os.path.realpath(filename))
 
 
 config_zelda = {
@@ -356,13 +383,13 @@ config_zelda = {
     "dump_period": 10,
     "parallel": True,
     "cvt_use_cache": True,
-    "archive_path": "/Users/njustesen/git/qdboard/qdboard/map-elites/runs/",
-    "centroids_path": "/Users/njustesen/git/qdboard/qdboard/map-elites/centroids/",
+    "archive_path": get_data_path("map-elites/runs/"),
+    "centroids_path": get_data_path("map-elites/centroids/"),
     "num_niches": 1000,
     "num_gens": 100000,
     "discrete_muts": 20,
     "discrete_mut_prob": 0.2,
-    "block_probs": [0.2, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+    "block_probs": [0.2, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
 }
 
 width = 13
@@ -374,12 +401,24 @@ b_dimensions_zelda = [
 ]
 run_id = str(uuid.uuid1())
 
-problem_zelda = Zelda(width, height, len(b_dimensions_zelda), min_fit=-50, max_fit=0, max_danger=spaces)
-visualizer = ZeldaImgVisualizer(os.path.join('/Users/njustesen/git/qdboard/qdboard/static/img/zelda/', run_id))
+human_level = FileHandler().load_level(get_data_path("data/zelda/zelda_lvl0.txt"))
+problem_zelda = Zelda(width, height, len(b_dimensions_zelda), min_fit=-150, max_fit=0, max_danger=spaces)
+problem_zelda_vary = Zelda(width, height, len(b_dimensions_zelda), min_fit=0, max_fit=1, max_danger=spaces, vary=human_level)
+human_level_solution = problem_zelda_vary.evaluate(human_level)
 
+'''
+dim_lens = [b_dimensions_zelda[i].max_value - b_dimensions_zelda[i].min_value for i in range(len(b_dimensions_zelda))]
+b_dimensions_zelda_vary = [
+    Dimension("Danger", max_value=human_level_solution.behavior[0] + dim_lens[0]/2, min_value=human_level_solution.behavior[0] - dim_lens[0]/2),
+    Dimension("Openness", max_value=human_level_solution.behavior[1] + dim_lens[1]/2, min_value=human_level_solution.behavior[1] - dim_lens[1]/2),
+]
+'''
+
+visualizer = ZeldaImgVisualizer(get_data_path(os.path.join('static/img/zelda/', run_id)))
 algo_zelda = MapElites(run_id, config_zelda, b_dimensions=b_dimensions_zelda, problem=problem_zelda, img_visualizer=visualizer)
+# algo_zelda = MapElites(run_id, config_zelda, b_dimensions=b_dimensions_zelda, problem=problem_zelda_vary, img_visualizer=visualizer)
 add_run(algo_zelda)
 algo_zelda.start()
 
 # Run server
-server.start_server(debug=True, use_reloader=False)
+server.start_server(debug=True, use_reloader=False, port=5000)

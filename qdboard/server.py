@@ -11,7 +11,8 @@ from qdboard import api
 import json
 import numpy as np
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
+app.config['EXPLAIN_TEMPLATE_LOADING'] = True
 
 
 @app.route('/', methods=['GET'])
@@ -55,7 +56,7 @@ def get(run_id):
     return json.dumps(api.get_run(run_id).to_json())
 
 
-def start_server(debug=False, use_reloader=False):
+def start_server(debug=False, use_reloader=False, port=5005):
     
     # Change jinja notation to work with angularjs
     jinja_options = app.jinja_options.copy()
@@ -70,4 +71,4 @@ def start_server(debug=False, use_reloader=False):
     app.jinja_options = jinja_options
 
     app.config['TEMPLATES_AUTO_RELOAD']=True
-    app.run(debug=debug, use_reloader=use_reloader)
+    app.run(debug=debug, use_reloader=use_reloader, port=port)

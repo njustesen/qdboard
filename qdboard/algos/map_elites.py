@@ -301,12 +301,13 @@ class MapElitesRunner:
         niche_index = kdt.query([s.behavior], k=1)[1][0][0]
         niche = kdt.data[niche_index]
         n = self.__make_hashable(niche)
-        elite = self.archive[s] if s in self.archive else None
+        elite = self.archive[n] if n in self.archive else None
         if elite is not None:
             if s.fitness > elite.fitness:
                 if self.img_visualizer is not None:
                     elite_path = self.img_visualizer.get_rel_path(elite)
-                    os.remove(elite_path)
+                    if os._exists(elite_path):
+                        os.remove(elite_path)
                 self.archive[n] = s
         else:
             self.archive[n] = s
@@ -337,7 +338,9 @@ class MapElitesRunner:
             if g == 0:  # random initialization
                 while init_count <= self.config['random_init']:
                     for i in range(0, self.config['random_init_batch']):
-                        if self.problem.continuous:
+                        if self.problem.vary is not None and len(to_evaluate) == 0:
+                            x = self.problem.vary
+                        elif self.problem.continuous:
                             x = np.random.uniform(self.problem.x_min, self.problem.x_max, self.problem.x_dims)
                         else:
                             x = np.random.choice(self.problem.blocks, self.problem.x_dims, p=self.config['block_probs'])
@@ -378,6 +381,9 @@ class MapElitesRunner:
             if self.config['num_gens'] == g or g == 0 or (g % self.config['dump_period'] == 0 and self.config['dump_period'] != -1):
                 print("generation:", g)
                 self.__save_archive(self.archive, g)
+
+            #max_fitness = np.max([solution.fitness for key, solution in self.archive.items()])
+            #print("Sum fit=", max_fitness)
 
     def get_centroids_filename(self):
         filename = f'centroids_{self.problem.name.strip()}_{self.problem.x_dims}_{self.problem.b_dims}_{self.config["num_niches"]}_{"-".join([dimension.name for dimension in self.b_dimensions])}.dat'
